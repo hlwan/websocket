@@ -5,8 +5,10 @@ server:
 
 spring:
   rabbitmq:
-    addresses: 192.168.1.1
+    addresses: localhost
     port: 5672
+    username: root
+    password: root
 
   application:
     name: websocket
