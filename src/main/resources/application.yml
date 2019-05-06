@@ -5,7 +5,7 @@ server:
 
 spring:
   rabbitmq:
-    addresses: localhost
+    addresses: 172.1.9.16
     port: 5672
     username: root
     password: root
@@ -16,4 +16,6 @@ spring:
 
   freemarker:
     request-context-attribute: request
+
+
 

@@ -8,20 +8,8 @@ var camera_vue=new Vue({
     el:"#form_display",
     data:{
         detail:{
-            imgUrl: 'http://pic15.nipic.com/20110628/1369025_192645024000_2.jpg',
-            events: [{
-                "event_confidence":"0.898919761",
-                "event_position":["0","0","100","100"],
-                "event_type":"电动车（包含摩托车）"
-            },{
-                "event_confidence":"0.862546504",
-                "event_position":["138","89","56","99"],
-                "event_type":"电动车（包含摩托车）"
-            },{
-                "event_confidence":"0.57464993",
-                "event_position":["245","324","111","20"],
-                "event_type":"电动车（包含摩托车）"
-            }],
+            imgUrl: '',
+            events: [],
             current_camera:'',
             current_time:'',
             current_type:'',
@@ -30,11 +18,11 @@ var camera_vue=new Vue({
             current_end:''
         },
         camera_filter:'',
-        target_camera_list:[1,2,3,4],
+        target_camera_list:[],
         current_time:'',
         time_begin:'',
         time_end:'',
-        time_list:['2019-05-06 12:13:23','2019-05-06 12:13:33','2019-05-07 12:13:23'],
+        time_list:[],
         currentEventType:'',
         filter_list:[],
     },

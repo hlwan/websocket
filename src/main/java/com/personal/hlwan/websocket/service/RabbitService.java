@@ -19,7 +19,7 @@ public class RabbitService {
     @Autowired
     private WebSocketServer webSocketServer;
 
-    @RabbitListener(bindings = @QueueBinding(exchange = @Exchange(value="",type= ExchangeTypes.TOPIC,durable="true"),key = "",value = @Queue(value="SPFXJG",durable="false",autoDelete="false")))    //监听器监听指定的Queue
+    @RabbitListener(bindings = @QueueBinding(exchange = @Exchange(value="amq.direct",type= ExchangeTypes.TOPIC,durable="true"),key = "SPFXJG",value = @Queue(value="SPFXJG",durable="false",autoDelete="false")))    //监听器监听指定的Queue
     public void received(String message){
         logger.info("received message:{}",message);
         webSocketServer.sendAll(message);
