@@ -1,0 +1,81 @@
+body,html{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: "微软雅黑";
+	min-width: 600px;
+	overflow-x: auto;
+}
+.wrap{
+	height: 100%;
+	background-size: cover;
+	background: url(../img/bg.png) no-repeat bottom center;
+}
+form{
+	min-width: 310px;
+}
+.loginWrap{
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform:translate(-50%,-50%);
+    -o-transform:translate(-50%,-50%);
+}
+.loginContent{
+	background: #fff;
+	padding: 40px 85px 50px 85px;
+	border-radius: 10px;
+}
+.logo{
+	text-align: center;
+}
+.gray{
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+.gray input{
+	width: 80%;
+	height: 40px;
+	border: none;
+	outline: 0;
+	padding-left: 7px;
+	font-family: '微软雅黑';
+}
+.gray label{
+	display: inline-block;
+	padding: 0 10px;
+}
+.line{
+	display: inline-block;
+    height: 24px;
+    border-left: 1px solid #e6e6e6;
+    vertical-align: middle;
+    margin-left: -6px;
+}
+label img{
+	vertical-align: middle;
+}
+.loginUser{
+	margin-top: 20px;
+	
+}
+.loginMima{
+	margin-top: 20px;
+}
+/*登陆按钮*/
+.loginBtn{
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 20px;
+	text-align: center;
+	margin-top: 30px;
+	cursor: pointer;
+	border-radius: 4px;
+	background: #519eec;
+}

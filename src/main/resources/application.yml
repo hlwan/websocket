@@ -1,0 +1,17 @@
+server:
+  port: 7081
+  servlet:
+    context-path: /demo
+
+spring:
+  rabbitmq:
+    addresses: 192.168.1.1
+    port: 5672
+
+  application:
+    name: websocket
+
+
+  freemarker:
+    request-context-attribute: request
+
