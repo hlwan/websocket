@@ -7,6 +7,7 @@ var latest_camera='';
 var camera_vue=new Vue({
     el:"#form_display",
     data:{
+        drawing:false,
         detail:{
             imgUrl: '',
             events: [],
@@ -19,46 +20,55 @@ var camera_vue=new Vue({
         },
         camera_filter:'',
         target_camera_list:[],
-        current_time:'',
+        time_filter:'',
         time_begin:'',
         time_end:'',
         time_list:[],
         currentEventType:'',
         filter_list:[],
     },
-    // watch:{
-    //     camera_filter:function(data){
-    //         this.draw();
-    //
-    //     },
-    //     current_time:function(){
-    //         this.draw();
-    //     },
-    //     time_begin:function(data){
-    //         if(this.time_end!='' &&this.time_end<data){
-    //
-    //         }
-    //
-    //     }
-    // },
+    watch:{
+        camera_filter:function(){
+            this.draw();
+
+        },
+        time_filter:function(){
+            this.draw();
+        },
+        time_end:function(){
+            this.draw();
+        },
+        time_begin:function(){
+            this.draw();
+        },
+        currentEventType:function () {
+            this.draw();
+        }
+    },
     methods:{
         addCamera:function(a){
             this.target_camera_list.push(a);
         },
 
         draw:function(){
+            if(this.drawing){
+                return ;
+            }
+            this.drawing=true;
             //如果没有选中的探头，取最新数据的探头设置为detail.current_camera
-            console.log(this.detail);
-            console.log(this.camera_filter);
-            console.log(this.current_time);
-            console.log(this.time_begin);
-            console.log(this.time_end);
-            console.log(this.currentEventType);
-
+            // console.log(this.detail);
+            // console.log(this.camera_filter);
+            // console.log(this.time_filter);
+            // console.log(this.time_begin);
+            // console.log(this.time_end);
+            // console.log(this.currentEventType);
             var _camera='';
             if(this.camera_filter==''){
                 _camera=latest_camera;
+            }else{
+                _camera=this.camera_filter;
             }
+
             var cameraChange=false;
             if(this.detail.current_camera!=_camera){
                 cameraChange=true;
@@ -76,11 +86,13 @@ var camera_vue=new Vue({
                 while(this.filter_list.length>0){
                     this.filter_list.pop();
                 }
-                this.currentEventType='';
+                //this.currentEventType='';
+                this.time_filter='';
                 flag=true;
             }
             //时间 如果没有选择时间  current_time为''，最time_list中第一条数据，设置为detail.current_time
             var targetCamera=camera_data[_camera];
+            // console.log(targetCamera);
             if(targetCamera==null){
                 return ;
             }
@@ -89,6 +101,8 @@ var camera_vue=new Vue({
                 return ;
             }
             //是否需要添加新的时间至列表
+            // console.log('否需要添加新的时间至列表');
+            // console.log(times);
             for(var i=times.length-1;i>=0;i--){
                 var _t=times[i];
                 var seek=false;
@@ -113,25 +127,25 @@ var camera_vue=new Vue({
                     if(time_data.events.length>0){
                         for(var m=0;m<time_data.events.length;m++){
                             var t_t=false;
-                            for(var k=0;k<this.filter_list.length;i++){
-                                if(this.filter_list[k]==time_data.events[m]){
+                            for(var k=0;k<this.filter_list.length;k++){
+                                if(this.filter_list[k]==time_data.events[m].event_type){
                                     t_t=true;
                                     break;
                                 }
                             }
                             if(!t_t){
-                                this.filter_list.push(time_data.events[m]);
+                                this.filter_list.push(time_data.events[m].event_type);
                             }
+
                         }
 
                     }
-
-
+                }else{
                 }
             }
             var _time='';
-            if(this.current_time!=''){
-                _time=this.current_time;
+            if(this.time_filter!=''){
+                _time=this.time_filter;
             }else{
                 _time=this.time_list[0];
             }
@@ -154,31 +168,28 @@ var camera_vue=new Vue({
                 var target_data=targetCamera.times[_time];
                 this.detail.imgUrl=target_data.image_url;
                 for(var n=0;n<target_data.events.length;n++){
-                    this.detail.events.push(target_data.events[n]);
+                    if(this.detail.current_type==''||this.detail.current_type==target_data.events[n].event_type){
+                        this.detail.events.push(target_data.events[n]);
+                    }
                 }
                 $('.red-ball').css('border-width','1px');
 
             }
             //
+            this.drawing=false;
         },
 
 
     }
 });
 
-function valueChange(){
-    camera_vue.draw();
-}
 
 function timeSelect(obj){
-    camera_vue.current_time=$(obj).innerHTML;
-    camera_vue.draw();
+    camera_vue.time_filter=$(obj).html();
 }
 
 function putCameraData(data){
-    console.log(data);
-    var d=eval(data);
-    console.log(d);
+    var d=eval("("+data+")");
     if(d.events.length==0){
         return ;
     }
@@ -204,7 +215,7 @@ function putCameraData(data){
         latest_camera=camera;
     }
     var timeList=_target_camera.times;
-    _target_camera.ts.shift(analyzeTime);
+    _target_camera.ts.unshift(analyzeTime);
     //有效的数据
     timeList[analyzeTime]=d;
     camera_vue.draw();

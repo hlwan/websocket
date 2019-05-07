@@ -19,6 +19,13 @@ function websocketClient() {
     sock.onmessage = function(data)
     {
         console.info(data.data);
+        if(data.data=='连接成功'){
+
+        }else{
+            putCameraData(data.data);
+
+        }
+
     };
 
     sock.onclose = function() {

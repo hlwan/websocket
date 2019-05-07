@@ -15,40 +15,52 @@
 <div class="row" id="form_display" >
     <div class="col-sm-3 col-md-2 sidebar">
         <div class="form-group">
-            <select id="order_status" required class="form-control" v-model="camera_filter" onchange="valueChange()">
+            <select id="camera_filter" required class="form-control" v-model="camera_filter">
                 <option value="" selected class="hidden">选择探头</option>
                 <option value="">全部探头</option>
-                <option  v-for="item in target_camera_list" value="{item}">{{item}}</option>
+                <option v-for="item in target_camera_list" v-bind:value="item">{{item}}</option>
             </select>
         </div>
         <div>
             <div class="input-group date form_date date-picker" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                <input class="form-control" size="16" type="text"  onchange="camera_vue.time_begin=this.value;valueChange();" value=""  placeholder="开始日期">
+                <input id="timepicker_time_begin" class="form-control" size="16" type="text"  v-model="time_begin" value=""  placeholder="开始日期">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
             <input type="hidden" value="" /><br/>
         </div>
         <div>
             <div class="input-group date form_date date-picker" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                <input class="form-control" size="16" type="text" value="" onchange="camera_vue.time_end=this.value;valueChange();" v-model="time_end" placeholder="结束日期">
+                <input id="timepicker_time_end" class="form-control" size="16" type="text" v-model="time_end" placeholder="结束日期">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
-            <input type="hidden"   value="" /><br/>
+            <input type="hidden"   value="" v-model="time_end"/><br/>
         </div>
         <div>
         <ul class="nav nav-sidebar">
-            <li v-for="m in time_list " v-bind:class="{active:current_time==m}"><a href="javascript:void(0);" onclick="timeSelect(this)">{{m}}</a></li>
+            <li v-for="m in time_list " v-bind:class="{active:time_filter==m}"><a href="javascript:void(0);" onclick="timeSelect(this)">{{m}}</a></li>
         </ul>
         </div>
     </div>
     <div class="col-sm-9  col-md-10 ">
-        <div class="form-horizontal col-sm-8  col-md-8">
-            <div class="form-group col-sm-5  col-md-5" style="padding:0px;">
-                <select id="order_status" required class="form-control col-sm-3  col-md-3"  v-model="currentEventType">
+        <div class="form-horizontal col-sm-11  col-md-11">
+            <div class="form-group col-sm-2  col-md-2" style="padding:0px;">
+                <select id="type_filter" required class="form-control col-sm-3  col-md-3" v-model="currentEventType">
                     <option value="" selected class="hidden">选择类型</option>
                     <option value="">全部类型</option>
-                    <option  v-for="item in filter_list" value="{item}">{{item}}</option>
+                    <option  v-for="item in filter_list" v-bind:value="item">{{item}}</option>
                 </select>
+            </div>
+            <div class="form-group col-sm-4  col-md-4" >
+                <label  class="col-sm-4 control-label" for="userName">当前探头:</label>
+                <div class="col-md-3">
+                    <p class="form-control-static">{{detail.current_camera}}</p>
+                </div>
+            </div>
+            <div class="form-group col-sm-4  col-md-4" >
+                <label  class="col-sm-4 control-label" for="userName">当前时间:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static">{{detail.current_time}}</p>
+                </div>
             </div>
         </div>
         <div class="form-horizontal col-sm-8 col-md-8">
@@ -85,7 +97,21 @@
 <script>
     $('.date-picker').datetimepicker({
         language: 'zh-CN',
-        format: 'yyyy-mm-dd hh:ii'
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose:true//自动关闭
     });
+    $('.date-picker').datetimepicker()
+    .on('hide',function(){
+        var v=$('#timepicker_time_begin').val();
+        if(v==null){
+            v='';
+        }
+        camera_vue.time_begin=v;
+        var v=$('#timepicker_time_end').val();
+        if(v==null){
+            v='';
+        }
+        camera_vue.time_end=v;
+    })
 </script>
 </@adminLayout>

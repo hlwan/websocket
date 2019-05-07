@@ -7,8 +7,8 @@ spring:
   rabbitmq:
     addresses: 172.1.9.16
     port: 5672
-    username: root
-    password: root
+    username: trimps
+    password: bishenglu
 
   application:
     name: websocket
