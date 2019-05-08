@@ -18,4 +18,12 @@ spring:
     request-context-attribute: request
 
 
-
+  jpa:
+    database-platform: com.enigmabridge.hibernate.dialect.SQLiteDialect #自己配置的方言
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:db/myDb
+    username: root
+    password: root

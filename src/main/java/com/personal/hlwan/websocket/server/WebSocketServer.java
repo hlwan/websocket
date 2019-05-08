@@ -1,13 +1,16 @@
 package com.personal.hlwan.websocket.server;
 
+import com.personal.hlwan.websocket.ApplicationContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/websocket/{sid}")
@@ -17,6 +20,8 @@ public class WebSocketServer {
     private static Logger logger= LoggerFactory.getLogger(WebSocketServer.class);
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
     private static ConcurrentHashMap<String,Session> webSocketMap = new ConcurrentHashMap<>();
+
+    private AnalyseService analyseService;
 
     public void sendAll(String message){
         webSocketMap.forEach((k,v)->{
@@ -32,10 +37,19 @@ public class WebSocketServer {
      * 连接建立成功调用的方法*/
     @OnOpen
     public void onOpen(Session session,@PathParam("sid") String sid) {
+        if(analyseService==null){
+            analyseService= ApplicationContextHelper.getBean(AnalyseService.class);
+        }
         webSocketMap.put(session.getId(),session);
         logger.info("有新窗口开始监听:"+sid+",当前在线人数为" + getOnlineCount());
         try {
             sendMessage(session,"连接成功");
+            List<String> messages=analyseService.getByTime(null,null);
+            if(!CollectionUtils.isEmpty(messages)){
+                for(String msg:messages){
+                    sendMessage(session,msg);
+                }
+            }
         } catch (IOException e) {
             logger.error("websocket IO异常");
         }

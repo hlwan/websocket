@@ -18,7 +18,6 @@ function websocketClient() {
     // 客户端发送消息给服务器，回调
     sock.onmessage = function(data)
     {
-        console.info(data.data);
         if(data.data=='连接成功'){
 
         }else{

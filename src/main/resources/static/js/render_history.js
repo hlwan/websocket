@@ -1,16 +1,17 @@
 var camera_data={
 
 };
+
+var latest_camera='';
+
 var current_vue=new Vue({
     el:"#current_nav",
     data:{
-        current:'current'
+        current:'history'
     }
 
 
 });
-
-var latest_camera='';
 
 var camera_vue=new Vue({
     el:"#form_display",
@@ -44,16 +45,55 @@ var camera_vue=new Vue({
             this.draw();
         },
         time_end:function(){
-            this.draw();
+            //this.draw();
         },
         time_begin:function(){
-            this.draw();
+            //this.draw();
         },
         currentEventType:function () {
             this.draw();
         }
     },
     methods:{
+        clear:function(){
+            this.drawing=true;
+            this.camera_filter='';
+            while(this.target_camera_list.length>0){
+                this.target_camera_list.pop();
+            }
+            this.time_filter='';
+            while(this.time_list.length>0){
+                this.time_list.pop();
+            }
+            this.currentEventType='';
+            while(this.filter_list.length>0){
+                this.filter_list.pop();
+            }
+            this.detail.imgUrl='';
+            while(this.detail.events.length>0){
+                this.detail.events.pop();
+            }
+            this.detail.current_camera='';
+            this.detail.current_time='';
+            this.detail.current_type='';
+            this.detail.current_info='';
+            this.detail.current_begin='';
+            this.detail.current_end='';
+            this.drawing=false;
+        },
+        search:function(){
+            get('/demo/query?begin='+this.time_begin+'&end='+this.time_end,'',function(data){
+                camera_vue.clear();
+                camera_data={};
+                for(var i=0;i<data.length;i++){
+                    putCameraData(data[i]);
+                }
+                camera_vue.draw();
+
+            },function () {
+                
+            })
+        },
         addCamera:function(a){
             this.target_camera_list.push(a);
         },
@@ -226,5 +266,4 @@ function putCameraData(data){
     _target_camera.ts.unshift(analyzeTime);
     //有效的数据
     timeList[analyzeTime]=d;
-    camera_vue.draw();
 }

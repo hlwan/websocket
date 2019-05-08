@@ -5,7 +5,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!--<link rel="icon" href="../../favicon.ico">-->
-<title>后台管理系统</title>
+<title>${title}</title>
 <link rel="shortcut icon" href="${request.contextPath}/assets/img/ico.png">
 <!-- Bootstrap core CSS -->
 <link href="${request.contextPath}/assets/third/bootstrap/css/bootstrap.css" rel="stylesheet">

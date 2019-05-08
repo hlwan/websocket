@@ -5,7 +5,7 @@
         <#include "head.ftl"/>
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav id="current_nav" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -15,7 +15,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">&nbsp;&nbsp;Demo</a>
+                    <a class="navbar-brand" href="#">&nbsp;&nbsp;${name}</a>
+                    <a class="navbar-brand" href="${request.contextPath}/data_history" target="_blank" v-if="current=='current'">&nbsp;&nbsp;历史查询</a>
+
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                 </div>
