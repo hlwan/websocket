@@ -230,6 +230,8 @@ var camera_vue=new Vue({
                     this.interests.blue.push(pois);
                 }
             }
+            $('svg').css('width',$('img').css('width'));
+            $('svg').css('height',$('img').css('height'));
 
 
         },
