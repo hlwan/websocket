@@ -34,6 +34,13 @@ public class IndexController {
         return "history";
     }
 
+    @GetMapping("/data_filter")
+    public String dataFilter(Model model){
+        model.addAttribute("name","区域过滤查询");
+        model.addAttribute("title","区域过滤查询");
+        return "history_filter";
+    }
+
     @GetMapping("sendMessage")
     @ResponseBody
     public String sendMessage(String message){

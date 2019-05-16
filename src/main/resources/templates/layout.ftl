@@ -17,6 +17,7 @@
                     </button>
                     <a class="navbar-brand" href="#">&nbsp;&nbsp;${name}</a>
                     <a class="navbar-brand" href="${request.contextPath}/data_history" target="_blank" v-if="current=='current'">&nbsp;&nbsp;历史查询</a>
+                    <a class="navbar-brand" href="${request.contextPath}/data_filter" target="_blank" v-if="current=='current'">&nbsp;&nbsp;区域过滤查询</a>
 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
