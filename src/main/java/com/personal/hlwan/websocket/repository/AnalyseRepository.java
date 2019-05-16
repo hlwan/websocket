@@ -18,6 +18,6 @@ public interface AnalyseRepository extends JpaRepository<Analyse,String> {
     @Query("select content from Analyse where analyseTime>=:begin and analyseTime<=:end order by analyseTime")
     List<String> selectByBeginAndEndTime(@Param("begin") String begin,@Param("end") String end);
 
-    @Query("select content from Analyse order by analyseTime")
+    @Query("select content from Analyse order by analyseTime desc")
     List<String> selectLatest(Pageable pageable);
 }
