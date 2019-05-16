@@ -198,9 +198,6 @@ var camera_vue=new Vue({
         camera_filter:function(){
             this.draw();
             var current=district[this.camera_filter];
-            if(this.camera_filter==this.detail.current_camera){
-                return ;
-            }
             while(this.interests.red.length>0){
                 this.interests.red.pop();
             }
