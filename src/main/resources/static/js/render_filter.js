@@ -230,10 +230,6 @@ var camera_vue=new Vue({
                     this.interests.blue.push(pois);
                 }
             }
-            $('svg').css('width',$('img').css('width'));
-            $('svg').css('height',$('img').css('height'));
-
-
         },
         time_filter:function(){
             this.draw();
@@ -423,6 +419,11 @@ var camera_vue=new Vue({
 
 
     }
+});
+
+$('img').on('resize',function(){
+    $('svg').css('width',$('img').css('width'));
+    $('svg').css('height',$('img').css('height'));
 });
 
 
