@@ -1,3 +1,159 @@
+var district={
+    '1001':{
+// 1001向南红框:
+//     1900,520
+// 2080,430
+// 2430,570
+// 2440,800
+// 1990,635
+// 1920,695
+// 540,280
+// 630,210
+        red:[{
+            points:[
+                {
+                    x:1900,
+                    y:520
+                },{
+                    x:2080,
+                    y:430
+                },{
+                    x:2430,
+                    y:570
+                },{
+                    x:2440,
+                    y:800
+                },{
+                    x:1990,
+                    y:635
+                },{
+                    x:1920,
+                    y:695
+                },{
+                    x:540,
+                    y:280
+                },{
+                    x:630,
+                    y:210
+                }
+            ]
+        }],
+        // 1001向南蓝框:
+//     1900,710
+// 1780,770
+// 480,320
+// 540,280
+// 1900,710
+        blue:[{
+            points:[{
+                x:1900,
+                y:710
+            },{
+                x:1780,
+                y:770
+            },{
+                x:480,
+                y:320
+            },{
+                x:540,
+                y:280
+            }],
+        }]
+    },
+    '1002':{
+        // 1002向东红框1:
+//     800,1440
+// 190,1430
+// 640,770
+// 730,770
+// 640,1170
+// 800,1200
+//
+// 1002向东红框2:
+//     2550,1020
+// 2550,920
+// 1500,700
+// 1490,720
+        red:[{
+            points:[{
+                x:800,
+                y:1440
+            },{
+                x:190,
+                y:1430
+            },{
+                x:640,
+                y:770
+            },{
+                x:730,
+                y:770
+            },{
+                x:640,
+                y:1170
+            },{
+                x:800,
+                y:1200
+            }]
+        },{
+            points:[{
+                x:2550,
+                y:1020
+            },{
+                x:2550,
+                y:920
+            },{
+                x:1500,
+                y:700
+            },{
+                x:1490,
+                y:720
+            }]
+        }],
+        // 1002向东蓝框1:
+//     930,1190
+// 670,1145
+// 760,705
+// 810,705
+//
+// 1002向东蓝框2:
+//     2550,1090
+// 2550,1040
+// 1480,740
+// 1480,760
+
+        blue:[{
+            points:[{
+                x:930,
+                y:1190
+            },{
+                x:670,
+                y:1145
+            },{
+                x:760,
+                y:705
+            },{
+                x:810,
+                y:705
+            }]
+        },{
+            points:[{
+                x:2550,
+                y:1090
+            },{
+                x:2550,
+                y:1040
+            },{
+                x:1480,
+                y:740
+            },{
+                x:1480,
+                y:760
+            }]
+        }]
+    }
+}
+
+
 var camera_data={
 
 };
@@ -25,8 +181,14 @@ var camera_vue=new Vue({
             current_type:'',
             current_info:'',
             current_begin:'',
-            current_end:''
+            current_end:'',
+            current_district:false,
         },
+        interests:{
+            red:[],
+            blue:[]
+        },
+        district_filter:false,
         camera_filter:'',
         target_camera_list:[],
         time_filter:'',
@@ -80,6 +242,57 @@ var camera_vue=new Vue({
             this.detail.current_begin='';
             this.detail.current_end='';
             this.drawing=false;
+            this.detail.current_district=false;
+            this.district_filter=false;
+        },
+        drawLines:function(camera){
+            var current=district[camera];
+            while(this.interests.red.length>0){
+                this.interests.red.pop();
+            }
+            while(this.interests.blue.length>0){
+                this.interests.blue.pop();
+            }
+            if(current==null){
+                return ;
+            }
+            var maxX=0;var maxY=0;
+            if(current.red.length>0){
+                for(var i=0;i<current.red.length;i++){
+                    var pois='';
+                    for(var j=0;j<current.red[i].points.length;j++){
+                        var d=current.red[i].points[j];
+                        pois=pois+' '+d.x+','+d.y;
+                        if(d.x>maxX){
+                            maxX=d.x;
+                        }
+                        if(d.y>maxY){
+                            maxY=d.y;
+                        }
+                    }
+                    pois=pois+' '+current.red[i].points[0].x+','+current.red[i].points[0].y;
+                    this.interests.red.push(pois);
+                }
+            }
+            if(current.blue.length>0){
+                for(var i=0;i<current.blue.length;i++){
+                    var pois='';
+                    for(var j=0;j<current.blue[i].points.length;j++){
+                        var d=current.blue[i].points[j];
+                        pois=pois+' '+d.x+','+d.y;
+                        if(d.x>maxX){
+                            maxX=d.x;
+                        }
+                        if(d.y>maxY){
+                            maxY=d.y;
+                        }
+                    }
+                    pois=pois+' '+current.blue[i].points[0].x+','+current.blue[i].points[0].y;
+                    this.interests.blue.push(pois);
+                }
+            }
+            $('svg').css('width',maxX+'px');
+            $('svg').css('height',maxY+'px');
         },
         search:function(){
             get('/demo/query?begin='+this.time_begin+'&end='+this.time_end,'',function(data){
@@ -121,7 +334,7 @@ var camera_vue=new Vue({
             if(this.detail.current_camera!=_camera){
                 cameraChange=true;
                 //this.detail.current_camera=_camera;
-
+                this.drawLines(_camera);
             }
             //探头变化 或者时间条件变化 ，清空列表重新初始化
             var flag=false;
@@ -198,7 +411,7 @@ var camera_vue=new Vue({
                 _time=this.time_list[0];
             }
             var _filter_type=this.currentEventType;
-            if(!flag && _time==this.detail.current_time&&_filter_type==this.detail.current_type){
+            if(!flag && _time==this.detail.current_time&&_filter_type==this.detail.current_type&&this.district_filter==this.detail.current_district){
                 //不需要重置
 
             }else{
@@ -209,6 +422,7 @@ var camera_vue=new Vue({
                 this.detail.current_type=_filter_type;
                 this.detail.current_begin=this.time_begin;
                 this.detail.current_end=this.time_end;
+                this.detail.current_district=this.district_filter;
                 $('.red-ball').css('border-width','0px');
                 while(this.detail.events.length>0){
                     this.detail.events.pop();
@@ -216,8 +430,14 @@ var camera_vue=new Vue({
                 var target_data=targetCamera.times[_time];
                 this.detail.imgUrl=target_data.image_url;
                 for(var n=0;n<target_data.events.length;n++){
-                    if(this.detail.current_type==''||this.detail.current_type==target_data.events[n].event_type){
-                        this.detail.events.push(target_data.events[n]);
+                    if(!this.detail.current_district){
+                        if(this.detail.current_type==''||this.detail.current_type==target_data.events[n].event_type){
+                            this.detail.events.push(target_data.events[n]);
+                        }
+                    }else{
+                        if(this.showPoint(target_data.events[n])){
+                            this.detail.events.push(target_data.events[n]);
+                        }
                     }
                 }
                 $('.red-ball').css('border-width','1px');
@@ -226,7 +446,43 @@ var camera_vue=new Vue({
             //
             this.drawing=false;
         },
-
+        showPoint:function(es){//事件信息
+            //所有所人不显示
+            if(es.event_type=='行人'){
+                return false;
+            }
+            //关闭了区域过滤
+            //其它类型显示
+            if(!this.detail.current_district){
+                return true;
+            }
+            //
+            var current=district[this.detail.current_camera];
+            if(current==null){
+                return true;
+            }
+            //取中心点
+            var x=es.event_position[0];
+            var y=es.event_position[1];
+            var w=es.event_position[2];
+            var h=es.event_position[3];
+            var p={
+                x:x+w/2,
+                y:y+h/2
+            };
+            //判断p是否在红色区域内
+            if(cross(p,current.red)){
+                return true;
+            }
+            //判断p是否在蓝色区域内，且不是电动车
+            if(cross(p,current.blue)){
+                if(es.event_type.indexOf('电动车')>-1){
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
 
     }
 });
@@ -267,3 +523,58 @@ function putCameraData(data){
     //有效的数据
     timeList[analyzeTime]=d;
 }
+
+function cross(point,districts){
+    for(var i=0;i<districts.length;i++){
+        if(crossDistrict(point,districts[i].points)){
+            return true;
+        }
+    }
+    return false;
+
+}
+
+function crossDistrict(point,points){
+    var c=0;
+    for(var i=0;i<points.length;i++){
+        var next=i+1;
+        if(next==points.length){
+            next=0;
+        }
+        if(crossLine(point,points[i],points[next])){
+            c++;
+        }
+    }
+    if(c%2==0){
+        return false;
+    }
+    return true;
+}
+
+function crossLine(point,first,second){
+    var tx=point.x;
+    var ty=point.y;
+    if(first.x< tx && second.x< tx){
+        return false;
+    }
+    if(first.y> ty && second.y>ty){
+        return false;
+    }
+    if(first.y< ty && second.y<ty){
+        return false;
+    }
+    //斜率计算
+    var w=Math.abs(first.x-second.x);
+    var h=Math.abs(first.y-second.y);
+    var bx=first.x>second.x?second.x:first.x;
+    if(tx > bx+ty*w/h ){
+        return false;
+    }
+    return true;
+}
+
+
+
+$('#dis_check').bootstrapSwitch({'onText':'区域过滤','offText':'区域过滤'});
+$('#dis_check').on('switchChange.bootstrapSwitch',function(){camera_vue.district_filter=arguments[1]});
+

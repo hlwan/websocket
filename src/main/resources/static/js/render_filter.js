@@ -179,12 +179,15 @@ var camera_vue=new Vue({
             current_type:'',
             current_info:'',
             current_begin:'',
-            current_end:''
+            current_end:'',
+            current_district:false,
+
         },
         interests:{
             red:[],
             blue:[]
         },
+        district_filter:false,
         camera_filter:'',
         target_camera_list:[],
         time_filter:'',

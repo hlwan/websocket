@@ -9,6 +9,8 @@
 <link rel="shortcut icon" href="${request.contextPath}/assets/img/ico.png">
 <!-- Bootstrap core CSS -->
 <link href="${request.contextPath}/assets/third/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/third/bootstrap/css/bootstrap-switch.min.css" rel="stylesheet">
+
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <link href="${request.contextPath}/assets/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -35,6 +37,7 @@
 
 <script>window.jQuery || document.write('<script src="${request.contextPath}/assets/assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="${request.contextPath}/assets/third/bootstrap/js/bootstrap.js"></script>
+<script src="${request.contextPath}/assets/third/bootstrap/js/bootstrap-switch.min.js"></script>
 <script src="${request.contextPath}/assets/third/fileupload/js/locales/zh.js"></script>
 <script src="${request.contextPath}/assets/third/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 <script src="${request.contextPath}/assets/third/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>

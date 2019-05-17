@@ -60,13 +60,14 @@
     </div>
     <div class="col-sm-9  col-md-10 ">
         <div class="form-horizontal col-sm-11  col-md-11">
-            <div class="form-group col-sm-2  col-md-2" style="padding:0px;">
+            <div class="form-group col-sm-2  col-md-2" style="padding:0px;" v-if="!district_filter">
                 <select id="type_filter" required class="form-control col-sm-3  col-md-3" v-model="currentEventType">
                     <option value="" selected class="hidden">选择类型</option>
                     <option value="">全部类型</option>
                     <option  v-for="item in filter_list" v-bind:value="item">{{item}}</option>
                 </select>
             </div>
+            <input id="dis_check" data-on-label="区域过滤"  data-off-label="区域过滤" type="checkbox" checked v-model="district_filter"/>
             <div class="form-group col-sm-4  col-md-4" >
                 <label  class="col-sm-4 control-label" for="userName">当前探头:</label>
                 <div class="col-md-3">

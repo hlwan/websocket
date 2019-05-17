@@ -11,6 +11,17 @@
         top: -20px;
         color: red;
     }
+    .svg-ground{
+        float: left;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+    }
+    .polyline-ground{
+        fill:rgb(255,255,255,0);
+    }
 </style>
 <div class="row" id="form_display" >
     <div class="col-sm-3 col-md-2 sidebar">
@@ -42,14 +53,17 @@
         </div>
     </div>
     <div class="col-sm-9  col-md-10 ">
-        <div class="form-horizontal col-sm-11  col-md-11">
-            <div class="form-group col-sm-2  col-md-2" style="padding:0px;">
+        <div class="form-horizontal col-sm-11  col-md-11 col-lg-11">
+            <div class="form-group col-sm-2  col-md-2" style="padding:0px;" v-if="!district_filter">
                 <select id="type_filter" required class="form-control col-sm-3  col-md-3" v-model="currentEventType">
                     <option value="" selected class="hidden">选择类型</option>
                     <option value="">全部类型</option>
                     <option  v-for="item in filter_list" v-bind:value="item">{{item}}</option>
                 </select>
             </div>
+            <input id="dis_check" type="checkbox" checked v-model="district_filter"/>
+            <#--<div class=" switch " >-->
+            <#--</div>-->
             <div class="form-group col-sm-4  col-md-4" >
                 <label  class="col-sm-4 control-label" for="userName">当前探头:</label>
                 <div class="col-md-3">
@@ -68,6 +82,10 @@
                 <div class="col-md-8" style="padding:0px;">
                     <img v-bind:src="detail.imgUrl"/>
                     <span class="red-ball" v-for="(item, index)  in detail.events" v-bind:style="{left:item.event_position[0]+'px',top:item.event_position[1]+'px',width:item.event_position[2]+'px',height:item.event_position[3]+'px'}"><span class="red-ball-index">{{index+1}}</span></span>
+                    <svg  class="svg-ground" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <polyline  class="polyline-ground" v-for="(item, index)  in interests.red" v-bind:points="item" style="stroke:red;stroke-width:3px"/>
+                        <polyline  class="polyline-ground" v-for="(item, index)  in interests.blue" v-bind:points="item" style="stroke:blue;stroke-width:3px"/>
+                    </svg>
                 </div>
             </div>
         </div>
