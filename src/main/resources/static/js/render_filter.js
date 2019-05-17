@@ -197,39 +197,6 @@ var camera_vue=new Vue({
     watch:{
         camera_filter:function(){
             this.draw();
-            var current=district[this.camera_filter];
-            while(this.interests.red.length>0){
-                this.interests.red.pop();
-            }
-            while(this.interests.blue.length>0){
-                this.interests.blue.pop();
-            }
-            console.log(current);
-            if(current==null){
-                return ;
-            }
-            if(current.red.length>0){
-                for(var i=0;i<current.red.length;i++){
-                    var pois='';
-                    for(var j=0;j<current.red[i].points.length;j++){
-                        var d=current.red[i].points[j];
-                        pois=pois+' '+d.x+','+d.y;
-                    }
-                    pois=pois+' '+current.red[i].points[0].x+','+current.red[i].points[0].y;
-                    this.interests.red.push(pois);
-                }
-            }
-            if(current.blue.length>0){
-                for(var i=0;i<current.blue.length;i++){
-                    var pois='';
-                    for(var j=0;j<current.blue[i].points.length;j++){
-                        var d=current.blue[i].points[j];
-                        pois=pois+' '+d.x+','+d.y;
-                    }
-                    pois=pois+' '+current.blue[i].points[0].x+','+current.blue[i].points[0].y;
-                    this.interests.blue.push(pois);
-                }
-            }
         },
         time_filter:function(){
             this.draw();
@@ -287,7 +254,55 @@ var camera_vue=new Vue({
         addCamera:function(a){
             this.target_camera_list.push(a);
         },
-
+        drawLines:function(camera){
+            var current=district[camera];
+            while(this.interests.red.length>0){
+                this.interests.red.pop();
+            }
+            while(this.interests.blue.length>0){
+                this.interests.blue.pop();
+            }
+            if(current==null){
+                return ;
+            }
+            var maxX=0;var maxY=0;
+            if(current.red.length>0){
+                for(var i=0;i<current.red.length;i++){
+                    var pois='';
+                    for(var j=0;j<current.red[i].points.length;j++){
+                        var d=current.red[i].points[j];
+                        pois=pois+' '+d.x+','+d.y;
+                        if(d.x>maxX){
+                            maxX=d.y;
+                        }
+                        if(d.y>maxY){
+                            maxY=d.y;
+                        }
+                    }
+                    pois=pois+' '+current.red[i].points[0].x+','+current.red[i].points[0].y;
+                    this.interests.red.push(pois);
+                }
+            }
+            if(current.blue.length>0){
+                for(var i=0;i<current.blue.length;i++){
+                    var pois='';
+                    for(var j=0;j<current.blue[i].points.length;j++){
+                        var d=current.blue[i].points[j];
+                        pois=pois+' '+d.x+','+d.y;
+                        if(d.x>maxX){
+                            maxX=d.y;
+                        }
+                        if(d.y>maxY){
+                            maxY=d.y;
+                        }
+                    }
+                    pois=pois+' '+current.blue[i].points[0].x+','+current.blue[i].points[0].y;
+                    this.interests.blue.push(pois);
+                }
+            }
+            $('svg').css('width',maxX+'px');
+            $('svg').css('height',maxY+'px');
+        },
         draw:function(){
             if(this.drawing){
                 return ;
@@ -311,6 +326,7 @@ var camera_vue=new Vue({
             if(this.detail.current_camera!=_camera){
                 cameraChange=true;
                 //this.detail.current_camera=_camera;
+                this.drawLines(_camera);
 
             }
             //探头变化 或者时间条件变化 ，清空列表重新初始化
