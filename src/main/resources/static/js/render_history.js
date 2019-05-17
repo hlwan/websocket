@@ -537,6 +537,7 @@ function cross(point,districts){
 
 }
 
+
 function crossDistrict(point,points){
     var c=0;
     for(var i=0;i<points.length;i++){
@@ -545,10 +546,10 @@ function crossDistrict(point,points){
             next=0;
         }
         if(crossLine(point,points[i],points[next])){
-            c++;
+            c=c+1;
         }
     }
-    if(c%2==0){
+    if(c==0||c%2==0){
         return false;
     }
     return true;
@@ -567,15 +568,13 @@ function crossLine(point,first,second){
         return false;
     }
     //斜率计算
-    var w=Math.abs(first.x-second.x);
-    var h=Math.abs(first.y-second.y);
-    var bx=first.x>second.x?second.x:first.x;
-    if(tx > bx+ty*w/h ){
+    var w=first.x-second.x;
+    var h=first.y-second.y;
+    if(tx > first.x+(ty-first.y)*w/h ){
         return false;
     }
     return true;
 }
-
 
 
 $('#dis_check').bootstrapSwitch({'onText':'区域过滤','offText':'区域过滤'});

@@ -410,6 +410,7 @@ var camera_vue=new Vue({
             this.drawing=false;
         },
         showPoint:function(es){//事件信息
+            console.log(es);
             //所有所人不显示
             if(es.event_type=='行人'){
                 return false;
@@ -425,10 +426,10 @@ var camera_vue=new Vue({
                 return true;
             }
             //取中心点
-            var x=es.event_position[0];
-            var y=es.event_position[1];
-            var w=es.event_position[2];
-            var h=es.event_position[3];
+            var x=Number(es.event_position[0]);
+            var y=Number(es.event_position[1]);
+            var w=Number(es.event_position[2]);
+            var h=Number(es.event_position[3]);
             var p={
                 x:x+w/2,
                 y:y+h/2
@@ -518,10 +519,10 @@ function crossDistrict(point,points){
             next=0;
         }
         if(crossLine(point,points[i],points[next])){
-            c++;
+            c=c+1;
         }
     }
-    if(c%2==0){
+    if(c==0||c%2==0){
         return false;
     }
     return true;
@@ -540,10 +541,9 @@ function crossLine(point,first,second){
         return false;
     }
     //斜率计算
-    var w=Math.abs(first.x-second.x);
-    var h=Math.abs(first.y-second.y);
-    var bx=first.x>second.x?second.x:first.x;
-    if(tx > bx+ty*w/h ){
+    var w=first.x-second.x;
+    var h=first.y-second.y;
+    if(tx > first.x+(ty-first.y)*w/h ){
         return false;
     }
     return true;
