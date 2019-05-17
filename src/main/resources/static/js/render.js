@@ -229,6 +229,9 @@ var camera_vue=new Vue({
             while(this.interests.blue.length>0){
                 this.interests.blue.pop();
             }
+            if(!this.district_filter){
+                return ;
+            }
             if(current==null){
                 return ;
             }
@@ -293,8 +296,8 @@ var camera_vue=new Vue({
             if(this.detail.current_camera!=_camera){
                 cameraChange=true;
                 //this.detail.current_camera=_camera;
-                this.drawLines(_camera);
             }
+            this.drawLines(_camera);
             //探头变化 或者时间条件变化 ，清空列表重新初始化
             var flag=false;
             if(cameraChange|| this.time_begin!=this.detail.current_begin||this.time_end!=this.detail.current_end){
