@@ -410,7 +410,6 @@ var camera_vue=new Vue({
             this.drawing=false;
         },
         showPoint:function(es){//事件信息
-            console.log(es);
             //所有所人不显示
             if(es.event_type=='行人'){
                 return false;
