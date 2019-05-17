@@ -86,8 +86,8 @@
                     <img v-bind:src="detail.imgUrl"/>
                     <span class="red-ball" v-for="(item, index)  in detail.events" v-bind:style="{left:item.event_position[0]+'px',top:item.event_position[1]+'px',width:item.event_position[2]+'px',height:item.event_position[3]+'px'}"><span class="red-ball-index">{{index+1}}</span></span>
                     <svg  class="svg-ground" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <polyline  class="polyline-ground" v-for="(item, index)  in interests.red" v-bind:points="item" style="stroke:rebeccapurple;stroke-width:2"/>
-                        <polyline  class="polyline-ground" v-for="(item, index)  in interests.blue" v-bind:points="item" style="stroke:blue;stroke-width:2"/>
+                        <polyline  class="polyline-ground" v-for="(item, index)  in interests.red" v-bind:points="item" style="stroke:red;stroke-width:3px"/>
+                        <polyline  class="polyline-ground" v-for="(item, index)  in interests.blue" v-bind:points="item" style="stroke:blue;stroke-width:3px"/>
 
                     </svg>
                 </div>

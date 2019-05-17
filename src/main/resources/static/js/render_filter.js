@@ -273,7 +273,7 @@ var camera_vue=new Vue({
                         var d=current.red[i].points[j];
                         pois=pois+' '+d.x+','+d.y;
                         if(d.x>maxX){
-                            maxX=d.y;
+                            maxX=d.x;
                         }
                         if(d.y>maxY){
                             maxY=d.y;
@@ -290,7 +290,7 @@ var camera_vue=new Vue({
                         var d=current.blue[i].points[j];
                         pois=pois+' '+d.x+','+d.y;
                         if(d.x>maxX){
-                            maxX=d.y;
+                            maxX=d.x;
                         }
                         if(d.y>maxY){
                             maxY=d.y;
