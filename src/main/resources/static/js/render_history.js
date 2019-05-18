@@ -183,11 +183,15 @@ var camera_vue=new Vue({
             current_begin:'',
             current_end:'',
             current_district:false,
+            current_width_percent:0.5,
+            current_height_percent:0.5
         },
         interests:{
             red:[],
             blue:[]
         },
+        width_percent:0.5,
+        height_percent:0.5,
         district_filter:false,
         camera_filter:'',
         target_camera_list:[],
@@ -199,6 +203,13 @@ var camera_vue=new Vue({
         filter_list:[],
     },
     watch:{
+        width_percent:function(){
+            this.draw();
+
+        },
+        height_percent:function(){
+            this.draw();
+        },
         camera_filter:function(){
             this.draw();
 
@@ -244,6 +255,8 @@ var camera_vue=new Vue({
             this.detail.current_info='';
             this.detail.current_begin='';
             this.detail.current_end='';
+            // this.detail.current_width_percent=0.5;
+            // this.detail.current_height_percent=0.5;
             this.drawing=false;
             this.detail.current_district=false;
             this.district_filter=false;
@@ -468,13 +481,13 @@ var camera_vue=new Vue({
                 return true;
             }
             //取中心点
-            var x=es.event_position[0];
-            var y=es.event_position[1];
-            var w=es.event_position[2];
-            var h=es.event_position[3];
+            var x=Number(es.event_position[0]);
+            var y=Number(es.event_position[1]);
+            var w=Number(es.event_position[2]);
+            var h=Number(es.event_position[3]);
             var p={
-                x:x+w/2,
-                y:y+h/2
+                x:x+w*this.detail.current_width_percent,
+                y:y+h*this.detail.current_height_percent
             };
             //判断p是否在红色区域内
             if(cross(p,current.red)){

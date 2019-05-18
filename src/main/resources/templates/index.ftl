@@ -61,7 +61,6 @@
                     <option  v-for="item in filter_list" v-bind:value="item">{{item}}</option>
                 </select>
             </div>
-            <input id="dis_check" type="checkbox" checked v-model="district_filter"/>
             <#--<div class=" switch " >-->
             <#--</div>-->
             <div class="form-group col-sm-4  col-md-4" >
@@ -74,6 +73,24 @@
                 <label  class="col-sm-4 control-label" for="userName">当前时间:</label>
                 <div class="col-md-6">
                     <p class="form-control-static">{{detail.current_time}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-horizontal col-sm-11  col-md-11 col-lg-11">
+            <input id="dis_check" type="checkbox" checked v-model="district_filter"/>
+            <#--<div class=" switch " >-->
+            <#--</div>-->
+            <div class="form-group col-sm-4  col-md-4" >
+                <label  class="col-sm-4 control-label" for="userName">宽度比例:</label>
+                <div class="col-md-3">
+                    <input type="text" v-model="width_percent">
+                </div>
+            </div>
+            <div class="form-group col-sm-4  col-md-4" >
+                <label  class="col-sm-4 control-label" for="userName">高度比例:</label>
+                <div class="col-md-6">
+                    <input type="text" v-model="height_percent">
                 </div>
             </div>
         </div>

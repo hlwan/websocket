@@ -182,11 +182,15 @@ var camera_vue=new Vue({
             current_begin:'',
             current_end:'',
             current_district:false,
+            current_width_percent:0.5,
+            current_height_percent:0.5
         },
         interests:{
             red:[],
             blue:[]
         },
+        width_percent:0.5,
+        height_percent:0.5,
         district_filter:false,
         camera_filter:'',
         target_camera_list:[],
@@ -198,6 +202,13 @@ var camera_vue=new Vue({
         filter_list:[],
     },
     watch:{
+        width_percent:function(){
+            this.draw();
+
+        },
+        height_percent:function(){
+            this.draw();
+        },
         camera_filter:function(){
             this.draw();
         },
@@ -373,7 +384,9 @@ var camera_vue=new Vue({
                 _time=this.time_list[0];
             }
             var _filter_type=this.currentEventType;
-            if(!flag && _time==this.detail.current_time&&_filter_type==this.detail.current_type&&this.district_filter==this.detail.current_district){
+            if(!flag && _time==this.detail.current_time&&_filter_type==this.detail.current_type&&this.district_filter==this.detail.current_district && this.width_percent==this.detail.current_width_percent
+                && this.height_percent==this.detail.current_height_percent
+            ){
                 //不需要重置
 
             }else{
@@ -385,6 +398,8 @@ var camera_vue=new Vue({
                 this.detail.current_begin=this.time_begin;
                 this.detail.current_end=this.time_end;
                 this.detail.current_district=this.district_filter;
+                this.detail.current_width_percent=this.width_percent;
+                this.detail.current_height_percent=this.height_percent;
                 $('.red-ball').css('border-width','0px');
                 while(this.detail.events.length>0){
                     this.detail.events.pop();
@@ -430,8 +445,8 @@ var camera_vue=new Vue({
             var w=Number(es.event_position[2]);
             var h=Number(es.event_position[3]);
             var p={
-                x:x+w/2,
-                y:y+h/2
+                x:x+w*this.detail.current_width_percent,
+                y:y+h*this.detail.current_height_percent
             };
             //判断p是否在红色区域内
             if(cross(p,current.red)){
