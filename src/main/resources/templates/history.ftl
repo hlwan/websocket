@@ -114,7 +114,7 @@
 
 
 <script src="${request.contextPath}/static/js/render_history.js"></script>
-    <script src="${request.contextPath}/assets/js/common/datetimepicker.js?2017090317"></script>
+    <#--<script src="${request.contextPath}/assets/js/common/datetimepicker.js?2017090317"></script>-->
 
 <script>
     $('.date-picker').datetimepicker({
