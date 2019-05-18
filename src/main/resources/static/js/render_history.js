@@ -430,7 +430,8 @@ var camera_vue=new Vue({
                 _time=this.time_list[0];
             }
             var _filter_type=this.currentEventType;
-            if(!flag && _time==this.detail.current_time&&_filter_type==this.detail.current_type&&this.district_filter==this.detail.current_district){
+            if(!flag && _time==this.detail.current_time&&_filter_type==this.detail.current_type&&this.district_filter==this.detail.current_district && this.width_percent==this.detail.current_width_percent
+                && this.height_percent==this.detail.current_height_percent){
                 //不需要重置
 
             }else{
