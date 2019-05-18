@@ -442,6 +442,8 @@ var camera_vue=new Vue({
                 this.detail.current_begin=this.time_begin;
                 this.detail.current_end=this.time_end;
                 this.detail.current_district=this.district_filter;
+                this.detail.current_height_percent=this.height_percent;
+                this.detail.current_width_percent=this.width_percent;
                 $('.red-ball').css('border-width','0px');
                 while(this.detail.events.length>0){
                     this.detail.events.pop();
