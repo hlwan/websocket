@@ -203,6 +203,9 @@ var camera_vue=new Vue({
             this.draw();
 
         },
+        district_filter:function(){
+            this.draw();
+        },
         time_filter:function(){
             this.draw();
         },
