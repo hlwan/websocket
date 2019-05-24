@@ -21,17 +21,47 @@ public class IndexController {
     private AnalyseService analyseService;
 
     @GetMapping("/index")
-    public String index(Model model){
+    public String index(Model model,Double mul){
+        if(mul==null){
+            mul=1D;
+        }
         model.addAttribute("name","实时监控");
         model.addAttribute("title","实时监控");
+        model.addAttribute("mul",mul);
         return "index";
     }
 
+    @GetMapping("/index_half")
+    public String indexHalf(Model model,Double mul){
+        model.addAttribute("name","实时监控");
+        model.addAttribute("title","实时监控");
+        if(mul==null){
+            mul=1D;
+        }
+        model.addAttribute("mul",mul);
+        return "index_half";
+    }
+
     @GetMapping("/data_history")
-    public String dataHistory(Model model){
+    public String dataHistory(Model model,Double mul){
         model.addAttribute("name","历史查询");
         model.addAttribute("title","历史查询");
+        if(mul==null){
+            mul=1D;
+        }
+        model.addAttribute("mul",mul);
         return "history";
+    }
+
+    @GetMapping("/data_history_half")
+    public String dataHistoryHalf(Model model,Double mul){
+        model.addAttribute("name","历史查询");
+        model.addAttribute("title","历史查询");
+        if(mul==null){
+            mul=1D;
+        }
+        model.addAttribute("mul",mul);
+        return "history_half";
     }
 
     @GetMapping("/data_filter")

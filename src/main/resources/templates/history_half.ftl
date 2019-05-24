@@ -22,17 +22,14 @@
     .polyline-ground{
         fill:rgb(255,255,255,0);
     }
-
+    img{
+        transform: scale(${mul});
+        transform-origin: 0 0;
+        resize: auto;
+    }
 </style>
 <div class="row" id="form_display" >
     <div class="col-sm-3 col-md-2 sidebar">
-        <div class="form-group">
-            <select id="camera_filter" required class="form-control" v-model="camera_filter">
-                <option value="" selected class="hidden">选择探头</option>
-                <option value="">全部探头</option>
-                <option v-for="item in target_camera_list" v-bind:value="item">{{item}}</option>
-            </select>
-        </div>
         <div>
             <div class="input-group date form_date date-picker" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                 <input id="timepicker_time_begin" class="form-control" size="16" type="text"  v-model="time_begin" value=""  placeholder="开始日期">
@@ -47,6 +44,19 @@
             </div>
             <input type="hidden"   value="" v-model="time_end"/><br/>
         </div>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-default" v-on:click="search">查询</button>
+        </div>
+
+        <div class="form-group">
+            <select id="camera_filter" required class="form-control" v-model="camera_filter">
+                <option value="" selected class="hidden">选择探头</option>
+                <option value="">全部探头</option>
+                <option v-for="item in target_camera_list" v-bind:value="item">{{item}}</option>
+            </select>
+        </div>
+
         <div>
         <ul class="nav nav-sidebar">
             <li v-for="m in time_list " v-bind:class="{active:time_filter==m}"><a href="javascript:void(0);" onclick="timeSelect(this)">{{m}}</a></li>
@@ -54,7 +64,7 @@
         </div>
     </div>
     <div class="col-sm-9  col-md-10 ">
-        <div class="form-horizontal col-sm-11  col-md-11 col-lg-11">
+        <div class="form-horizontal col-sm-11  col-md-11">
             <div class="form-group col-sm-2  col-md-2" style="padding:0px;" v-if="!district_filter">
                 <select id="type_filter" required class="form-control col-sm-3  col-md-3" v-model="currentEventType">
                     <option value="" selected class="hidden">选择类型</option>
@@ -62,8 +72,6 @@
                     <option  v-for="item in filter_list" v-bind:value="item">{{item}}</option>
                 </select>
             </div>
-            <#--<div class=" switch " >-->
-            <#--</div>-->
             <div class="form-group col-sm-4  col-md-4" >
                 <label  class="col-sm-4 control-label" for="userName">当前探头:</label>
                 <div class="col-md-3">
@@ -77,7 +85,6 @@
                 </div>
             </div>
         </div>
-
         <div class="form-horizontal col-sm-11  col-md-11 col-lg-11">
             <input id="dis_check" type="checkbox" checked v-model="district_filter"/>
             <#--<div class=" switch " >-->
@@ -124,10 +131,12 @@
     </div>
 </div>
 
+    <script>
 
+        var mul=${mul};
+    </script>
 
-<script src="${request.contextPath}/static/js/render.js"></script>
-<script src="${request.contextPath}/static/js/websocket.js"></script>
+<script src="${request.contextPath}/static/js/render_history_half.js"></script>
     <#--<script src="${request.contextPath}/assets/js/common/datetimepicker.js?2017090317"></script>-->
 
 <script>

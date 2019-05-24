@@ -22,7 +22,11 @@
     .polyline-ground{
         fill:rgb(255,255,255,0);
     }
-
+    img{
+        transform: scale(${mul});
+        transform-origin: 0 0;
+        resize: auto;
+    }
 </style>
 <div class="row" id="form_display" >
     <div class="col-sm-3 col-md-2 sidebar">
@@ -104,6 +108,7 @@
                         <polyline  class="polyline-ground" v-for="(item, index)  in interests.red" v-bind:points="item" style="stroke:red;stroke-width:3px"/>
                         <polyline  class="polyline-ground" v-for="(item, index)  in interests.blue" v-bind:points="item" style="stroke:blue;stroke-width:3px"/>
                     </svg>
+
                 </div>
             </div>
         </div>
@@ -124,13 +129,16 @@
     </div>
 </div>
 
+    <script>
+        var mul=${mul};
+    </script>
 
-
-<script src="${request.contextPath}/static/js/render.js"></script>
+<script src="${request.contextPath}/static/js/render_half.js"></script>
 <script src="${request.contextPath}/static/js/websocket.js"></script>
     <#--<script src="${request.contextPath}/assets/js/common/datetimepicker.js?2017090317"></script>-->
 
 <script>
+
     $('.date-picker').datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd hh:ii',
