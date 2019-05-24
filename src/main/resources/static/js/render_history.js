@@ -566,7 +566,18 @@ function crossDistrict(point,points){
         }
         if(crossLine(point,points[i],points[next])){
             c=c+1;
+        }else{
+            if( points[i].y==point.y&&points[i].x > point.x ){
+                var pre=i-1;
+                if(pre==-1){
+                    pre=points.length-1;
+                }
+                if((points[pre].y-point.y)*(points[next].y-point.y)<0){
+                    c=c+1;
+                }
+            }
         }
+
     }
     if(c==0||c%2==0){
         return false;
@@ -580,11 +591,14 @@ function crossLine(point,first,second){
     if(first.x< tx && second.x< tx){
         return false;
     }
-    if(first.y> ty && second.y>ty){
+    if(first.y>= ty && second.y>=ty){
         return false;
     }
-    if(first.y< ty && second.y<ty){
+    if(first.y<= ty && second.y<=ty){
         return false;
+    }
+    if(first.x>tx&&second.x>tx){
+        return true;
     }
     //斜率计算
     var w=first.x-second.x;
