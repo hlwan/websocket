@@ -554,6 +554,9 @@ function crossLine(point,first,second){
     if(first.y< ty && second.y<ty){
         return false;
     }
+    if(first.x>tx&&second.x>tx){
+        return true;
+    }
     //斜率计算
     var w=first.x-second.x;
     var h=first.y-second.y;
