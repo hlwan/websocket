@@ -22,6 +22,11 @@
     .polyline-ground{
         fill:rgb(255,255,255,0);
     }
+    img{
+        transform: scale(${mul});
+        transform-origin: 0 0;
+        resize: auto;
+    }
 
 </style>
 <div class="row" id="form_display" >
@@ -124,7 +129,10 @@
     </div>
 </div>
 
+    <script>
 
+        var mul=${mul};
+    </script>
 
 <script src="${request.contextPath}/static/js/render.js"></script>
 <script src="${request.contextPath}/static/js/websocket.js"></script>

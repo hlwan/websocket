@@ -12,29 +12,29 @@ var district={
         red:[{
             points:[
                 {
-                    x:1900,
-                    y:520
+                    x:1900*mul,
+                    y:520*mul
                 },{
-                    x:2080,
-                    y:430
+                    x:2080*mul,
+                    y:430*mul
                 },{
-                    x:2430,
-                    y:570
+                    x:2430*mul,
+                    y:570*mul
                 },{
-                    x:2440,
-                    y:800
+                    x:2440*mul,
+                    y:800*mul
                 },{
-                    x:1990,
-                    y:635
+                    x:1990*mul,
+                    y:635*mul
                 },{
-                    x:1920,
-                    y:695
+                    x:1920*mul,
+                    y:695*mul
                 },{
-                    x:540,
-                    y:280
+                    x:540*mul,
+                    y:280*mul
                 },{
-                    x:630,
-                    y:210
+                    x:630*mul,
+                    y:210*mul
                 }
             ]
         }],
@@ -46,17 +46,17 @@ var district={
 // 1900,710
         blue:[{
             points:[{
-                x:1900,
-                y:710
+                x:1900*mul,
+                y:710*mul
             },{
-                x:1780,
-                y:770
+                x:1780*mul,
+                y:770*mul
             },{
-                x:480,
-                y:320
+                x:480*mul,
+                y:320*mul
             },{
-                x:540,
-                y:280
+                x:540*mul,
+                y:280*mul
             }],
         }]
     },
@@ -76,37 +76,37 @@ var district={
 // 1490,720
         red:[{
             points:[{
-                x:800,
-                y:1440
+                x:800*mul,
+                y:1440*mul
             },{
-                x:190,
-                y:1430
+                x:190*mul,
+                y:1430*mul
             },{
-                x:640,
-                y:770
+                x:640*mul,
+                y:770*mul
             },{
-                x:730,
-                y:770
+                x:730*mul,
+                y:770*mul
             },{
-                x:640,
-                y:1170
+                x:640*mul,
+                y:1170*mul
             },{
-                x:800,
-                y:1200
+                x:800*mul,
+                y:1200*mul
             }]
         },{
             points:[{
-                x:2550,
-                y:1020
+                x:2550*mul,
+                y:1020*mul
             },{
-                x:2550,
-                y:920
+                x:2550*mul,
+                y:920*mul
             },{
-                x:1500,
-                y:700
+                x:1500*mul,
+                y:700*mul
             },{
-                x:1490,
-                y:720
+                x:1490*mul,
+                y:720*mul
             }]
         }],
         // 1002向东蓝框1:
@@ -123,35 +123,38 @@ var district={
 
         blue:[{
             points:[{
-                x:930,
-                y:1190
+                x:930*mul,
+                y:1190*mul
             },{
-                x:670,
-                y:1145
+                x:670*mul,
+                y:1145*mul
             },{
-                x:760,
-                y:705
+                x:760*mul,
+                y:705*mul
             },{
-                x:810,
-                y:705
+                x:810*mul,
+                y:705*mul
             }]
         },{
             points:[{
-                x:2550,
-                y:1090
+                x:2550*mul,
+                y:1090*mul
             },{
-                x:2550,
-                y:1040
+                x:2550*mul,
+                y:1040*mul
             },{
-                x:1480,
-                y:740
+                x:1480*mul,
+                y:740*mul
             },{
-                x:1480,
-                y:760
+                x:1480*mul,
+                y:760*mul
             }]
         }]
     }
 }
+
+
+
 
 
 var camera_data={
@@ -407,13 +410,21 @@ var camera_vue=new Vue({
                 var target_data=targetCamera.times[_time];
                 this.detail.imgUrl=target_data.image_url;
                 for(var n=0;n<target_data.events.length;n++){
+                    var _t={};
+                    _t.event_type=target_data.events[n].event_type;
+                    _t.event_confidence=target_data.events[n].event_confidence;
+                    _t.event_position=new Array();
+                    _t.event_position[0]=String(Number(target_data.events[n].event_position[0])*mul);
+                    _t.event_position[1]=String(Number(target_data.events[n].event_position[1])*mul);
+                    _t.event_position[2]=String(Number(target_data.events[n].event_position[2])*mul);
+                    _t.event_position[3]=String(Number(target_data.events[n].event_position[3])*mul);
                     if(!this.detail.current_district){
                         if(this.detail.current_type==''||this.detail.current_type==target_data.events[n].event_type){
-                            this.detail.events.push(target_data.events[n]);
+                            this.detail.events.push(_t);
                         }
                     }else{
-                        if(this.showPoint(target_data.events[n])){
-                            this.detail.events.push(target_data.events[n]);
+                        if(this.showPoint(_t)){
+                            this.detail.events.push(_t);
                         }
                     }
 

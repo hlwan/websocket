@@ -22,6 +22,11 @@
     .polyline-ground{
         fill:rgb(255,255,255,0);
     }
+    img{
+        transform: scale(${mul});
+        transform-origin: 0 0;
+        resize: auto;
+    }
 </style>
 <div class="row" id="form_display" >
     <div class="col-sm-3 col-md-2 sidebar">
@@ -126,7 +131,10 @@
     </div>
 </div>
 
+    <script>
 
+        var mul=${mul};
+    </script>
 
 <script src="${request.contextPath}/static/js/render_history.js"></script>
     <#--<script src="${request.contextPath}/assets/js/common/datetimepicker.js?2017090317"></script>-->
